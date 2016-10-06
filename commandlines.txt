@@ -1,0 +1,9 @@
+#from controller machine
+
+echo videowall > ~/monitoring.txt
+
+ansible-playbook --vault-password-file=~/monitoring.txt -i db deploy_kiosk_db.yml -Kku vagrant
+
+ansible-playbook --vault-password-file=~/monitoring.txt -i nodes deploy_kiosk_export.yml -e provision=true -e init_db=true -Kku vagrant
+
+python /opt/verizon/kiosk/django/manage.py createsuperuser

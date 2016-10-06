@@ -1,0 +1,5 @@
+*.iso
+control.pub
+.vagrant/machines
+*retry
+videowall_export-master/
