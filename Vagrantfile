@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "controller", primary: true do |h|
-    h.vm.hostname =  "controller"
+    h.vm.hostname =  "controller.videowall.ops.teamaol.com"
     h.vm.network "private_network", ip: "192.168.135.10"
     h.vm.network :forwarded_port, guest: 80, host: 8080
     h.vm.provider "virtualbox" do |vb|
@@ -44,7 +44,7 @@ EOF
   end
 
   config.vm.define "tv1" do |h|
-    h.vm.hostname = "tv1"
+    h.vm.hostname = "tv1.videowall.ops.teamaol.com"
     h.vm.network "private_network", ip: "192.168.135.111"
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
     h.vm.provider "virtualbox" do |vb|
@@ -58,7 +58,7 @@ EOF
   end
 
   config.vm.define "tv2" do |h|
-    h.vm.hostname = "tv2"
+    h.vm.hostname = "tv2.videowall.ops.teamaol.com"
     h.vm.network "private_network", ip: "192.168.135.112"
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
     h.vm.provider "virtualbox" do |vb|
