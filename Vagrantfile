@@ -47,7 +47,7 @@ EOF
   config.vm.define "tv1" do |h|
     h.vm.hostname = "tv1"
     h.vm.network "private_network", ip: "192.168.135.111"
-    h.vm.provision :shell, inline: 'sudo useradd videowall -p videowall'
+    h.vm.provision :shell, inline: 'apt-get install virtualbox-guest-x11 -y'
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
     h.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--monitorcount", "2"]
@@ -59,7 +59,7 @@ EOF
   config.vm.define "tv2" do |h|
     h.vm.hostname = "tv2"
     h.vm.network "private_network", ip: "192.168.135.112"
-    h.vm.provision :shell, inline: 'sudo useradd videowall -p videowall'
+    h.vm.provision :shell, inline: 'apt-get install virtualbox-guest-x11 -y'
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
     h.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--monitorcount", "2"]
