@@ -12,7 +12,11 @@
 #  with access, by name, to other vms
 Vagrant.configure(2) do |config|
   config.hostmanager.enabled = true
-
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "controller", primary: true do |h|
@@ -22,10 +26,12 @@ Vagrant.configure(2) do |config|
     h.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
       vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+      vb.customize ['modifyvm', :id, '--memory', "1024"]
     end
     h.vm.provision "shell" do |provision|
       provision.path = "provision_controller.sh"
     end
+    h.vm.provision :hostmanager
     h.vm.provision :shell, :inline => <<'EOF'
 
 	if [ ! -f "/home/vagrant/.ssh/id_rsa" ]; then
@@ -55,6 +61,7 @@ EOF
     h.vm.provision "shell" do |provision|
       provision.path = "provision_tv.sh"
     end
+    h.vm.provision :hostmanager
   end
 
   config.vm.define "tv2" do |h|
@@ -69,6 +76,7 @@ EOF
     h.vm.provision "shell" do |provision|
       provision.path = "provision_tv.sh"
     end
+    h.vm.provision :hostmanager
   end
 
 end
