@@ -20,13 +20,15 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "controller", primary: true do |h|
-    h.vm.hostname =  "controller.videowall.ops.teamaol.com"
+    h.vm.hostname =  "controller.videowall.ops.teamaol.local"
     h.vm.network "private_network", ip: "192.168.135.10"
     h.vm.network :forwarded_port, guest: 80, host: 8080
     h.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
       vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
-      vb.customize ['modifyvm', :id, '--memory', "1024"]
+      vb.customize ['modifyvm', :id, '--memory', "2048"]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
     h.vm.provision "shell" do |provision|
       provision.path = "provision_controller.sh"
@@ -50,13 +52,16 @@ EOF
   end
 
   config.vm.define "tv1" do |h|
-    h.vm.hostname = "tv1.videowall.ops.teamaol.com"
+    h.vm.hostname = "tv1.videowall.ops.teamaol.local"
     h.vm.network "private_network", ip: "192.168.135.111"
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
     h.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--monitorcount", "2"]
       vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
       vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+      vb.customize ['modifyvm', :id, '--memory', "2048"]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
     h.vm.provision "shell" do |provision|
       provision.path = "provision_tv.sh"
@@ -65,13 +70,16 @@ EOF
   end
 
   config.vm.define "tv2" do |h|
-    h.vm.hostname = "tv2.videowall.ops.teamaol.com"
+    h.vm.hostname = "tv2.videowall.ops.teamaol.local"
     h.vm.network "private_network", ip: "192.168.135.112"
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
     h.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--monitorcount", "2"]
       vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
       vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+      vb.customize ['modifyvm', :id, '--memory', "2048"]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
     h.vm.provision "shell" do |provision|
       provision.path = "provision_tv.sh"
