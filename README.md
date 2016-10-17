@@ -14,6 +14,6 @@ This configuration depends on the vagrant-hostmanager plugin, which  will manage
 Getting Started
 -- 
 
-clone this repo ``git clone https://github.com/jminck/vagrant-ansible-videowall.git```
+clone this repo ```git clone https://github.com/jminck/vagrant-ansible-videowall.git```
 
-run ```vagrant up```
+run ```vagrant up``` from the root of the cloned repo (same folder where the Vagrantfile is)
